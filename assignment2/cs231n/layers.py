@@ -5,7 +5,7 @@ import numpy as np
 def affine_forward(x, w, b):
     """
     Computes the forward pass for an affine (fully-connected) layer.
-
+                               (2,4,5,6)
     The input x has shape (N, d_1, ..., d_k) and contains a minibatch of N
     examples, where each example x[i] has shape (d_1, ..., d_k). We will
     reshape each input into a vector of dimension D = d_1 * ... * d_k, and
@@ -25,7 +25,9 @@ def affine_forward(x, w, b):
     # TODO: Implement the affine forward pass. Store the result in out. You   #
     # will need to reshape the input into rows.                               #
     ###########################################################################
-    pass
+    shape=x.shape
+    input_x=x.reshape(shape[0],w.shape[0])
+    out=np.dot(input_x,w)+b
     ###########################################################################
     #                             END OF YOUR CODE                            #
     ###########################################################################
@@ -53,7 +55,9 @@ def affine_backward(dout, cache):
     ###########################################################################
     # TODO: Implement the affine backward pass.                               #
     ###########################################################################
-    pass
+    dw=np.dot(x.reshape(x.shape[0],w.shape[0]).T,dout)
+    db=np.sum(dout,axis=0)
+    dx=np.dot(dout,w.T).reshape(x.shape)
     ###########################################################################
     #                             END OF YOUR CODE                            #
     ###########################################################################
@@ -75,7 +79,7 @@ def relu_forward(x):
     ###########################################################################
     # TODO: Implement the ReLU forward pass.                                  #
     ###########################################################################
-    pass
+    out=np.maximum(0,x)
     ###########################################################################
     #                             END OF YOUR CODE                            #
     ###########################################################################
@@ -98,7 +102,8 @@ def relu_backward(dout, cache):
     ###########################################################################
     # TODO: Implement the ReLU backward pass.                                 #
     ###########################################################################
-    pass
+    dx=dout
+    dx[x<=0]=0
     ###########################################################################
     #                             END OF YOUR CODE                            #
     ###########################################################################
